@@ -1,25 +1,25 @@
 <?php
-   require '../connection.php'; 
-   require "header.php";
+require '../connection.php';
+require "header.php";
 
 
-   if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user'])) {
     header('Location: ../signin.php');
     exit();
 }
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $user_id = $_SESSION['user']['id'];
-        $amount = $_POST['amount'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $user_id = $_SESSION['user']['id'];
+    $amount = $_POST['amount'];
 
-        $sql = "INSERT INTO user_deposits (user_id, deposit_amount) VALUES ('$user_id', '$amount')";
+    $sql = "INSERT INTO user_deposits (user_id, deposit_amount) VALUES ('$user_id', '$amount')";
 
-        if ($conn->query($sql) === TRUE) {
-            $status = "Deposit recorded successfully.";
-        } else {
-            $status = "Error: " . $conn->error;
-        }
+    if ($conn->query($sql) === true) {
+        $status = "Deposit recorded successfully.";
+    } else {
+        $status = "Error: " . $conn->error;
     }
+}
 ?>
 
 <?php if(isset($status)): ?>

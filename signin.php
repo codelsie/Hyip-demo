@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require 'connection.php';
 
@@ -6,18 +6,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = $_POST['email'];
     $password = $_POST['password'];
-    
+
     $sql = "SELECT * FROM users WHERE email = '{$email}' AND `password` = '{$password}' ";
     $result = $conn->query($sql);
-    
-    if($result->num_rows === 0){
+
+    if($result->num_rows === 0) {
         echo "invalid username and password";
-    }else{
+    } else {
         $user = $result->fetch_assoc();
         $_SESSION["user"] = $user;
         header("location: dashboard/index.php");
     }
-    
+
 }
 
 ?>

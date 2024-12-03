@@ -1,6 +1,6 @@
 <?php
 
-class Investment 
+class Investment
 {
     public function get_active_investments(): mysqli_result
     {
@@ -14,33 +14,34 @@ class Investment
     public function increase_active_investments(): void
     {
         $investment = $this->get_active_investments();
-        if($investment->num_rows > 0){
-            while($row = $investment->fetch_assoc()){
-               $this->process_active_investment($row);
+        if($investment->num_rows > 0) {
+            while($row = $investment->fetch_assoc()) {
+                $this->process_active_investment($row);
             }
-        };    
+        };
     }
 
     /**
      * @param array $row    The active investment
      */
-    public function process_active_investment(array $row) {
+    public function process_active_investment(array $row)
+    {
         /**
          * @var array The investment plan of the active investment
          */
         $investment_plan = $this->get_investment_plan($row['investment_plan_id']);
-        
+
         /**
          * @var array The user of the active invesment
          */
         $investment_user = $this->get_investment_user($row['user_id']);
-        
+
         $daily_increase_percentage = (int)$investment_plan["daily_increase"];
         $investment_amount = (int)$row['investment_amount'];
 
         // This is the amount that will be added daily to the investment balance
         $daily_increase_amount =  $investment_amount * $daily_increase_percentage / 100;
-        
+
         /**
          * $date == The expiry date of the active investment
          */
@@ -52,7 +53,7 @@ class Investment
          * $now == The current date
          */
         $now = new DateTime();
-        
+
         $last_update = new DateTime($row['last_update']);  // accessed last_update column
         $interval = $last_update->diff($now);
 
@@ -67,12 +68,12 @@ class Investment
         } elseif($interval->days > 0) {
             $this->increase_investment_balance($row, $daily_increase_amount);
             $this->update_last_update($row['id']);
-            
+
             // Call a function to increase the investment_balance
         }
     }
 
-    public function get_investment_plan(int $investment_id): ?array 
+    public function get_investment_plan(int $investment_id): ?array
     {
         global $conn;
         $sql = "SELECT * FROM investment_plans WHERE id = '$investment_id'";

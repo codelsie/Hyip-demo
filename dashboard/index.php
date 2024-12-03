@@ -1,9 +1,9 @@
-<?php 
+<?php
 require "../connection.php";
-require 'header.php'; 
+require 'header.php';
 
-        
-        $user = getUser();
+
+$user = getUser();
 ?>
 
 
@@ -22,14 +22,14 @@ require 'header.php';
             <th>Investment-plan</th>
         </tr>
                 
-<?php         
+<?php
             $sql = "SELECT * FROM user_investments WHERE user_id = {$user['id']}";
-            $result = $conn->query($sql);
-            $investmentData = [];
-            if($result->num_rows > 0){
-                while($row = $result->fetch_assoc()):
-                    $investmentData[] = $row;
-?>
+$result = $conn->query($sql);
+$investmentData = [];
+if($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()):
+        $investmentData[] = $row;
+        ?>
         <tr>
             <td><?php echo $user['user_balance']?></td>
             <td><?php echo $row['investment_amount'];?></td>
@@ -39,9 +39,9 @@ require 'header.php';
         </tr>
 
         <?php
-                endwhile;
-            }
-        ?>
+    endwhile;
+}
+?>
     </table>
 
 </div>

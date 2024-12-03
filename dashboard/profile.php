@@ -1,7 +1,7 @@
-<?php require "header.php"; 
-    require "../connection.php";
+<?php require "header.php";
+require "../connection.php";
 
- $user = getUser(); 
+$user = getUser();
 ?>
 
 <div class="container py-3">
